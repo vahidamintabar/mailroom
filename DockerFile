@@ -1,0 +1,7 @@
+FROM python:3.8
+
+WORKDIR /mailroom
+ADD ./requirements.txt /mailroom/requirements.txt
+RUN pip install -r /mailroom/requirements.txt
+ADD . /mailroom
+EXPOSE 8000

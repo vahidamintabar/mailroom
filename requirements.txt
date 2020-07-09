@@ -1,0 +1,4 @@
+Django==3.0.8
+uvicorn
+psycopg2
+django-jalali-date

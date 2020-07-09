@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: ./DockerFile
+    command: uvicorn mailroom.asgi:application --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/mailroom
+      - ./public/static:/STATIC
+      - ./public/media:/MEDIA
+    depends_on:
+      - db
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=mailroom
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./docker/mailroom.conf:/etc/nginx/conf.d/mailroom.conf
+      - ./public/static:/STATIC
+      - ./public/media:/MEDIA
+    depends_on:
+      - web
