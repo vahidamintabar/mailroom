@@ -15,6 +15,8 @@ services:
       - db
   db:
     image: postgres
+    volumes:
+      - ./db/:/var/lib/postgresql
     environment:
       - POSTGRES_DB=mailroom
       - POSTGRES_USER=postgres
